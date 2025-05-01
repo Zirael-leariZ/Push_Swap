@@ -6,7 +6,7 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 14:41:59 by oishchen          #+#    #+#             */
-/*   Updated: 2025/04/29 12:13:35 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/01 14:09:20 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,19 @@ void	free_each_node_exit(t_que **arr)
 	int		i;
 
 	i = 0;
-	temp = (*arr)->head;
-	while (i < (*arr)->size)
+	if ((*arr)->head)
 	{
-		(*arr)->head = (*arr)->head->next;
-		free(temp);
 		temp = (*arr)->head;
-		i++;
+		while (i < (*arr)->size)
+		{
+			(*arr)->head = (*arr)->head->next;
+			free(temp);
+			temp = (*arr)->head;
+			i++;
+		}
 	}
-	free(*arr);
+	if (*arr)
+		free(*arr);
 	exit(1);
 }
 
