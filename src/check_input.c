@@ -6,7 +6,7 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 21:48:52 by oishchen          #+#    #+#             */
-/*   Updated: 2025/05/01 14:10:40 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/01 15:11:50 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,23 @@ void	print_circular_arr(t_que *arr, char *arr_type)
 	}
 }
 
+int	is_in_que(t_que *arr, int cur_val)
+{
+	int		i;
+	t_que	*cpy;
+
+	i = 0;
+	cpy = arr;
+	while (i < arr->size)
+	{
+		if (cpy->head->val == cur_val)
+			return (1);
+		i++;
+		cpy->head = cpy->head->next;
+	}
+	return (0);
+}
+
 void	atoi_to_que(char *str, t_que *arr_a)
 {
 	int			sign;
@@ -58,7 +75,13 @@ void	atoi_to_que(char *str, t_que *arr_a)
 			res = res * 10 + (*str - '0');
 			str++;
 		}
-		append_value_bottom(arr_a, (res * sign));
+		if (is_in_que(arr_a, res))
+			append_value_bottom(arr_a, (res * sign));
+		else
+		{
+			ft_printf("FUCK YOURSELF, please no repeat values\n"); // delete that
+			free_each_node_exit(&arr_a);
+		}
 	}
 }
 
@@ -128,9 +151,13 @@ int main(int ac, char *av[])
 	if (ac > 1)
 	{
 		t_que	*res;
+		int		*arr_int;
 
 		res = parse_input(ac, av);
 		print_circular_arr(res, "res");
+		arr_int = cpy_que(res);
+		if (arr_int)
+			print_arr(arr_int, res->size);
 		free_each_node_exit(&res);
 	}
 	return (0);

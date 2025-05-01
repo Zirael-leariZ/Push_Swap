@@ -6,7 +6,7 @@
 #    By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/23 12:27:49 by oishchen          #+#    #+#              #
-#    Updated: 2025/05/01 12:56:56 by oishchen         ###   ########.fr        #
+#    Updated: 2025/05/01 14:55:34 by oishchen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,8 @@ SRC_DIR = src
 OBJ_DIR = obj
 NAME = push_swap
 
-C_FILES = check_input.c op1.c op2.c op_utils.c utils.c
+C_FILES = check_input.c op1.c op2.c op_utils.c utils.c \
+		find_median.c
 SRC = $(addprefix $(SRC_DIR)/, $(C_FILES))
 OBJ = $(addprefix $(OBJ_DIR)/, $(C_FILES:.c=.o))
 
