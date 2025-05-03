@@ -6,7 +6,7 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 21:48:52 by oishchen          #+#    #+#             */
-/*   Updated: 2025/05/01 15:11:50 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/03 22:11:03 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	atoi_to_que(char *str, t_que *arr_a)
 			res = res * 10 + (*str - '0');
 			str++;
 		}
-		if (is_in_que(arr_a, res))
+		if (!is_in_que(arr_a, res))
 			append_value_bottom(arr_a, (res * sign));
 		else
 		{
@@ -151,14 +151,13 @@ int main(int ac, char *av[])
 	if (ac > 1)
 	{
 		t_que	*res;
-		int		*arr_int;
+		
+		// int		*arr_count;
 
 		res = parse_input(ac, av);
-		print_circular_arr(res, "res");
-		arr_int = cpy_que(res);
-		if (arr_int)
-			print_arr(arr_int, res->size);
-		free_each_node_exit(&res);
+		print_circular_arr(res, "our input");
+		ft_sort(&res);
+		
 	}
 	return (0);
 }

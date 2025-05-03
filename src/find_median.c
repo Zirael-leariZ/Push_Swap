@@ -6,23 +6,28 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 12:58:14 by oishchen          #+#    #+#             */
-/*   Updated: 2025/05/01 15:00:36 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/03 23:15:54 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	print_arr(int *arr_int, int size)
+void	print_arr(int *arr_int, int size, char *which_arr) // works
 {
 	int	i;
 
 	i = 0;
+	ft_printf("%s ", which_arr);
 	while (i < size)
-		ft_printf("%d ", arr_int[i++]);
+	{
+		ft_printf("%d ", arr_int[i]);
+		i++;
+	}
+		
 	ft_printf("\n");
 }
 
-int	*cpy_que(t_que *arr_a)
+int	*cpy_que(t_que *arr_a) // works
 {
 	int		*cpy_arr;
 	int		i;
@@ -30,7 +35,7 @@ int	*cpy_que(t_que *arr_a)
 
 	if (!arr_a)
 		return ((void *)0);
-	cpy_arr = malloc(arr_a->size);
+	cpy_arr = (int *)malloc(arr_a->size);
 	if (!cpy_arr)
 		free_each_node_exit(&arr_a);
 	i = 0;
@@ -42,4 +47,52 @@ int	*cpy_que(t_que *arr_a)
 		i++;
 	}
 	return (cpy_arr);
+}
+
+int	*sort_arr(int **arr, int size)
+{
+	int	i;
+	int	j;
+	int temp;
+	int	*res;
+
+	i = 0;
+	while(i < size - 1)
+	{
+		if ((*arr)[i] > (*arr)[i + 1])
+		{
+			temp = (*arr)[i];
+			(*arr)[i] = (*arr)[i + 1];
+			(*arr)[i + 1] = temp;
+			i = 0;
+		}
+		else
+			i++;
+	}
+	print_arr(*arr, size, "inside sort");
+	res = (int *)malloc(size);
+	if (!res)
+		return (free((*arr)), NULL);
+	j = 0;
+	while (j < size)
+	{
+		res[j] = (*arr)[j];
+		j++;
+	}
+	return (res);
+}
+
+void ft_sort(t_que **que_arr)
+{
+	int	*arr_int;
+	int	*arr_sorted;
+
+	arr_int = cpy_que(*que_arr);
+	if (!arr_int)
+		free_each_node_exit(que_arr);
+	arr_sorted = sort_arr(&arr_int, (*que_arr)->size);
+	if (!arr_sorted)
+		free_each_node_exit(que_arr);
+	print_arr(arr_sorted, (*que_arr)->size, "sorted_arr ");
+	
 }
