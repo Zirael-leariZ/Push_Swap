@@ -6,7 +6,7 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:36:13 by oishchen          #+#    #+#             */
-/*   Updated: 2025/05/03 22:02:47 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/03 23:32:45 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void print_arr(int *arr_int, int size, char *which_arr);
 //median search
 int	*cpy_que(t_que *arr_a);
 void ft_sort(t_que **que_arr);
-int	*sort_arr(int **arr, int size);
+int	*sort_arr(int *arr, int size);
 // int	*cumulative_arr(int *arr);
 // int	find_max(int *arr, int size);
 // int	*count_cum_arr(int *arr, int size, int exp);
