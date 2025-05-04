@@ -6,7 +6,7 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:36:13 by oishchen          #+#    #+#             */
-/*   Updated: 2025/05/01 14:54:10 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/03 23:32:45 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,22 @@ t_que	*parse_input(int ac, char *av[]);
 char	*no_space_str(char *src, char *dest, int *cur_pos);
 void	atoi_to_que(char *str, t_que *arr_a);
 int		ft_isspace(int c);
+int		is_in_que(t_que *arr, int cur_val);
 
 //delete after
 void print_circular_arr(t_que *arr, char *arr_type);
-void print_arr(int *arr_int, int size);
+void print_arr(int *arr_int, int size, char *which_arr);
 
 //median search
 int	*cpy_que(t_que *arr_a);
+void ft_sort(t_que **que_arr);
+int	*sort_arr(int *arr, int size);
+// int	*cumulative_arr(int *arr);
+// int	find_max(int *arr, int size);
+// int	*count_cum_arr(int *arr, int size, int exp);
+// int	*sort_arr(int **int_arr, int **int_tenarr, int size, int exp);
+// int	*ft_radix_sort(t_que *que_arr);
+// int	find_median(t_que *que_list);
 
 // subfunctions for allowed functions
 void	delete_head(t_que *arr);
