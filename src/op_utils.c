@@ -6,7 +6,7 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:29:33 by oishchen          #+#    #+#             */
-/*   Updated: 2025/04/29 12:33:13 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/04 13:42:06 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,3 +56,22 @@ void	delete_head(t_que *arr)
 	arr->size--;
 }
 
+int	move_counter_ahead(t_que *que_list, int digit, int direction)
+{
+	t_que	*cpy;
+	int		i;
+
+	cpy = que_list;
+	i = 0;
+	while (i < que_list->size)
+	{
+		if (digit == cpy->head->val)
+			return (i);
+		if (direction == 1)
+			cpy->head = cpy->head->next;
+		else if (direction == -1)
+			cpy->head = cpy->head->prv;
+		i++;
+	}
+	return (-1);
+}
