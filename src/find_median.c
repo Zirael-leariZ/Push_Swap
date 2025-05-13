@@ -6,31 +6,17 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 12:58:14 by oishchen          #+#    #+#             */
-/*   Updated: 2025/05/04 12:21:16 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/08 12:42:39 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	print_arr(int *arr_int, int size, char *which_arr) // works
-{
-	int	i;
-
-	i = 0;
-	ft_printf("%s ", which_arr);
-	while (i < size)
-	{
-		ft_printf("%d ", arr_int[i]);
-		i++;
-	}
-	ft_printf("\n");
-}
-
 int	*cpy_que(t_que *arr_a) // works
 {
-	int		*cpy_arr;
-	int		i;
-	t_que	*temp;
+	int			*cpy_arr;
+	int			i;
+	t_que_node	*temp;
 
 	if (!arr_a)
 		return ((void *)0);
@@ -38,11 +24,11 @@ int	*cpy_que(t_que *arr_a) // works
 	if (!cpy_arr)
 		free_each_node_exit(&arr_a);
 	i = 0;
-	temp = arr_a;
+	temp = arr_a->head;
 	while (i < arr_a->size)
 	{
-		cpy_arr[i] = temp->head->val;
-		temp->head = temp->head->next;
+		cpy_arr[i] = temp->val;
+		temp = temp->next;
 		i++;
 	}
 	return (cpy_arr);
@@ -76,7 +62,42 @@ int	*sort_arr(int *arr, int size)
 	return (res);
 }
 
-void ft_sort(t_que **que_arr)
+int	find_index(int *arr_int, int size, int digit)
+{
+	int	i;
+
+	i = 0;
+	while (i < size)
+	{
+		if (arr_int[i] == digit)
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
+void	assign_index(t_que **que_list, int *sorted_arr)
+{
+	int			i;
+	t_que_node	*temp;
+
+	i = 0;
+	temp = (*que_list)->head;
+	while (i < (*que_list)->size)
+	{
+		temp->index = find_index(sorted_arr, (*que_list)->size, temp->val);
+		if (temp->index == -1)
+		{
+			ft_printf("ERROR WITH INDEX ALLOCATION\n"); // delete that after
+			free(sorted_arr);
+			free_each_node_exit(que_list);
+		}
+		i++;
+		temp = temp->next;
+	}
+}
+
+int	*ft_sort(t_que **que_arr)
 {
 	int	*arr_int;
 	int	*arr_sorted;
@@ -85,8 +106,10 @@ void ft_sort(t_que **que_arr)
 	if (!arr_int)
 		free_each_node_exit(que_arr);
 	arr_sorted = sort_arr(arr_int, (*que_arr)->size);
+	free(arr_int);
 	if (!arr_sorted)
 		free_each_node_exit(que_arr);
-	print_arr(arr_sorted, (*que_arr)->size, "sorted_arr ");
-	
+	print_arr(arr_sorted, (*que_arr)->size, "sorted_arr");
+	assign_index(que_arr, arr_sorted);
+	return (arr_sorted);
 }

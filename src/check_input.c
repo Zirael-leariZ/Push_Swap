@@ -6,7 +6,7 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 21:48:52 by oishchen          #+#    #+#             */
-/*   Updated: 2025/05/03 22:11:03 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/13 15:38:26 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,6 @@
 int	ft_isspace(int c)
 {
 	return (c == 32 || (c >= 9 && c <= 13));
-}
-
-void	print_circular_arr(t_que *arr, char *arr_type)
-{
-	t_que	*temp = arr;
-	int		i;
-
-	i = 0;
-	if (arr->head)
-	{
-		ft_printf("%s, head: %d\n", arr_type, arr->head->val);
-		ft_printf("%s, size: %d\n", arr_type, arr->size);
-	}
-	while (i < arr->size)
-	{
-		ft_printf("%s Our data: %d\n", arr_type, temp->head->val);
-		temp->head = temp->head->next;
-		i++;
-	}
 }
 
 int	is_in_que(t_que *arr, int cur_val)
@@ -150,13 +131,36 @@ int main(int ac, char *av[])
 {
 	if (ac > 1)
 	{
-		t_que	*res;
-		
-		// int		*arr_count;
+		t_que	*a;
+		t_que	*b;
+		int		*arr_int;
+		// int		chuncks;
 
-		res = parse_input(ac, av);
-		print_circular_arr(res, "our input");
-		ft_sort(&res);
+		a = parse_input(ac, av);
+		b = create_list();
+		arr_int = ft_sort(&a);
+		// print_circular_arr(a, "a after parse");
+		// print_circular_arr(b, "b after parse");
+		// chuncks = derive_chuncks(a->size);
+		while (!is_fully_sorted(a))
+		{
+			pivot_sort(a, b);
+
+		// print_circular_arr(a, "a after pivot");
+		// print_circular_arr(b, "b after pivot");
+
+			chunck_sort(a, b);
+
+		// print_circular_arr(a, "a after chunck");
+		// print_circular_arr(b, "b after chunck");
+
+			back_sort(a, b);
+
+		// print_circular_arr(a, "a after back_sort");
+		// print_circular_arr(b, "b after back_sort");
+		}
+		free_each_node_exit(&a);
+		free_each_node_exit(&b);
 		
 	}
 	return (0);

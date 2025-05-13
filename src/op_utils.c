@@ -6,7 +6,7 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:29:33 by oishchen          #+#    #+#             */
-/*   Updated: 2025/05/04 13:42:06 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/09 18:12:02 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,26 @@ void	rotate(t_que *arr, int i)
 {
 	if (!arr)
 		return ;
-	if (i == 1)
-		arr->head = arr->head->prv;
 	if (i == -1)
+		arr->head = arr->head->prv;
+	if (i == 1)
 		arr->head = arr->head->next;
 }
 
 void	ft_list_swap(t_que *arr)
 {
-	int	temp;
+	int	data;
+	int	index;
 
-	temp = arr->head->val;
-	arr->head->val = arr->head->next->val;
-	arr->head->next->val = temp;
+	if (arr->size > 1)
+	{
+		data = arr->head->val;
+		index = arr->head->index;
+		arr->head->val = arr->head->next->val;
+		arr->head->index = arr->head->next->index;
+		arr->head->next->index = index;
+		arr->head->next->val = data;
+	}
 }
 
 void	delete_head(t_que *arr)
@@ -56,22 +63,4 @@ void	delete_head(t_que *arr)
 	arr->size--;
 }
 
-int	move_counter_ahead(t_que *que_list, int digit, int direction)
-{
-	t_que	*cpy;
-	int		i;
 
-	cpy = que_list;
-	i = 0;
-	while (i < que_list->size)
-	{
-		if (digit == cpy->head->val)
-			return (i);
-		if (direction == 1)
-			cpy->head = cpy->head->next;
-		else if (direction == -1)
-			cpy->head = cpy->head->prv;
-		i++;
-	}
-	return (-1);
-}

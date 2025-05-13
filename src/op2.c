@@ -6,7 +6,7 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 12:29:36 by oishchen          #+#    #+#             */
-/*   Updated: 2025/04/29 12:23:55 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:40:18 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,23 +42,54 @@ void	ss(t_que *arr_a, t_que *arr_b)
 
 void	pb(t_que *arr_a, t_que *arr_b)
 {
-	ft_printf("PB start\n");
-	append_value_bottom(arr_b, arr_a->head->val);
-	delete_head(arr_a);
+	t_que_node	*temp;
+
+	temp = arr_a->head->next;
+	arr_a->head->prv->next = arr_a->head->next;
+	arr_a->head->next->prv = arr_a->head->prv;
+	if (arr_b->head)
+	{
+		arr_a->head->prv = arr_b->head->prv;
+		arr_a->head->next = arr_b->head;
+		arr_b->head->prv->next = arr_a->head;
+		arr_b->head->prv = arr_a->head;
+		arr_b->head = arr_a->head;
+	}
+	else
+	{
+		arr_b->head = arr_a->head;
+		arr_b->head->next = arr_a->head;
+		arr_b->head->prv = arr_a->head;
+		arr_a->head->next = arr_b->head;
+		arr_a->head->prv = arr_b->head->prv;
+	}
+	arr_a->head = temp;
+	arr_b->size++;
+	arr_a->size--;
 	ft_printf("pb\n");
-	ft_printf("---------------------------------\n");
-	print_circular_arr(arr_a, "arr_a");
-	ft_printf("---------------------------------\n");
-	print_circular_arr(arr_b,  "arr_b");
 }
 
 void	pa(t_que *arr_a, t_que *arr_b)
 {
-	append_value_bottom(arr_a, arr_b->head->val);
-	delete_head(arr_b);
+	t_que_node	*temp;
+
+	if (arr_b->size == 0 || !arr_b || !arr_a)
+		return ;
+	if (arr_b->size > 1)
+	{
+		temp = arr_b->head->next;
+		arr_b->head->next->prv = arr_b->head->prv;
+		arr_b->head->prv->next = arr_b->head->next;
+	}
+	else
+		temp = NULL;
+	arr_b->head->prv = arr_a->head->prv;
+	arr_b->head->next = arr_a->head;
+	arr_a->head->prv->next = arr_b->head;
+	arr_a->head->prv = arr_b->head;
+	arr_a->head = arr_b->head;
+	arr_b->head = temp;
+	arr_a->size++;
+	arr_b->size--;
 	ft_printf("pa\n");
-	ft_printf("---------------------------------\n");
-	print_circular_arr(arr_a, "arr_a");
-	ft_printf("---------------------------------\n");
-	print_circular_arr(arr_b,  "arr_b");
 }

@@ -6,7 +6,7 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:36:13 by oishchen          #+#    #+#             */
-/*   Updated: 2025/05/03 23:32:45 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/13 14:13:30 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,24 @@
 #include "libft.h"
 #include "ft_printf.h"
 
+#define SA 0
+#define SB 1
+#define SS 2
+#define PA 3
+#define PB 4
+#define RA 5
+#define RB 6
+#define RR 7
+#define RRA 8
+#define RRB 9
+#define RRR 10
+
 typedef struct s_que_node
 {
 	struct s_que_node	*next;
 	struct s_que_node	*prv;
 	int					val;
+	int					index;
 } t_que_node;
 
 typedef struct	s_que
@@ -30,6 +43,40 @@ typedef struct	s_que
 	t_que_node	*head;
 	int			size;
 } t_que;
+
+// sort suplementary
+void	pivot_sort(t_que *a, t_que *b);
+void	chunck_sort(t_que *a, t_que *b);
+void	back_sort(t_que *a, t_que *b);
+void	sort_exe(t_que *a, t_que *b, t_que_node *b_node);
+
+//BACKSORT_UTILS
+int		count_steps(t_que *a, t_que *b, t_que_node *b_node);
+int		steps_in_b(t_que *b, t_que_node *b_node, int *rb_or_rrb);
+int		steps_in_a(t_que *a, t_que_node *b_node, int *ra_or_rra);
+void	push_to_a(t_que *a, t_que *b, t_que_node *b_node);
+
+//EFFICIENCY functions
+void	prep_que(t_que *a, t_que *b, int low_border, int high_border);
+
+
+// EXECUTE BACK_SORT
+void	exe_rb_rra(t_que *a, t_que *b, int rb_nb, int rra_nb);
+void	exe_rb_ra(t_que *a, t_que *b, int rb_nb, int ra_nb);
+void	exe_rrb_rra(t_que *a, t_que *b, int rrb_nb, int rra_nb);
+void	exe_rrb_ra(t_que *a, t_que *b, int rrb_nb, int ra_nb);
+// void	ra_rb_rr(t_que *a, t_que *b, int pivot, int chunck);
+// int	derive_chuncks(int size);
+// int	nb_rb(t_que *b, int high_border, int pivot);
+// int	nb_ra(t_que *que_a, int high_border);
+// int	nb_rra(t_que *a, int high_border);
+// int		ft_min(int a, int b);
+
+// check for already sorted arr
+int	is_sorted(t_que_node *a_node, int size);
+int	rewind_que(t_que *a, int begin_idx);
+int	is_fully_sorted(t_que *a);
+void	three_sort(t_que *a);
 
 //parse input ac && av
 t_que	*parse_input(int ac, char *av[]);
@@ -41,11 +88,14 @@ int		is_in_que(t_que *arr, int cur_val);
 //delete after
 void print_circular_arr(t_que *arr, char *arr_type);
 void print_arr(int *arr_int, int size, char *which_arr);
+void print_index(t_que *arr, char *message);
+void	check_pa(t_que *a, t_que *b);
 
 //median search
 int	*cpy_que(t_que *arr_a);
-void ft_sort(t_que **que_arr);
+int *ft_sort(t_que **que_arr);
 int	*sort_arr(int *arr, int size);
+void assign_index(t_que **que_list, int *arr);
 // int	*cumulative_arr(int *arr);
 // int	find_max(int *arr, int size);
 // int	*count_cum_arr(int *arr, int size, int exp);

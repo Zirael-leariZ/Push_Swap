@@ -6,7 +6,7 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 14:41:59 by oishchen          #+#    #+#             */
-/*   Updated: 2025/05/01 14:09:20 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/11 21:01:32 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	free_each_node_exit(t_que **arr)
 	}
 	if (*arr)
 		free(*arr);
-	exit(1);
+	exit(0);
 }
 
 t_que	*create_list(void)
