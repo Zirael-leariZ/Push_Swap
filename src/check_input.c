@@ -6,7 +6,7 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 21:48:52 by oishchen          #+#    #+#             */
-/*   Updated: 2025/05/13 15:38:26 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:07:37 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ int main(int ac, char *av[])
 
 			back_sort(a, b);
 
-		// print_circular_arr(a, "a after back_sort");
+		print_circular_arr(a, "a after back_sort");
 		// print_circular_arr(b, "b after back_sort");
 		}
 		free_each_node_exit(&a);
