@@ -6,7 +6,7 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 12:58:14 by oishchen          #+#    #+#             */
-/*   Updated: 2025/05/08 12:42:39 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/15 13:24:17 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	*cpy_que(t_que *arr_a) // works
 	return (cpy_arr);
 }
 
-int	*sort_arr(int *arr, int size)
+int	*sort_arr(int *arr, int size, t_que **a)
 {
 	int	i;
 	int temp;
@@ -55,7 +55,7 @@ int	*sort_arr(int *arr, int size)
 	}
 	res = (int *)malloc(size * sizeof(int));
 	if (!res)
-		return (free(arr), NULL);
+		return(free(arr), free_each_node_exit(a), NULL);
 	i = -1;
 	while (++i < size)
 		res[i] = arr[i];
@@ -105,11 +105,11 @@ int	*ft_sort(t_que **que_arr)
 	arr_int = cpy_que(*que_arr);
 	if (!arr_int)
 		free_each_node_exit(que_arr);
-	arr_sorted = sort_arr(arr_int, (*que_arr)->size);
+	arr_sorted = sort_arr(arr_int, (*que_arr)->size, que_arr);
 	free(arr_int);
 	if (!arr_sorted)
 		free_each_node_exit(que_arr);
-	print_arr(arr_sorted, (*que_arr)->size, "sorted_arr");
+	// print_arr(arr_sorted, (*que_arr)->size, "sorted_arr");
 	assign_index(que_arr, arr_sorted);
 	return (arr_sorted);
 }

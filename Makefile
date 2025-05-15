@@ -6,7 +6,7 @@
 #    By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/23 12:27:49 by oishchen          #+#    #+#              #
-#    Updated: 2025/05/12 22:04:29 by oishchen         ###   ########.fr        #
+#    Updated: 2025/05/15 10:42:59 by oishchen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ NAME = push_swap
 
 C_FILES = check_input.c op1.c op2.c op_utils.c utils.c \
 		find_median.c temp.c sort_utils.c back_sort_utils.c \
-		op3.c is_sorted.c pivot_chunck_utils.c
+		op3.c is_sorted.c pivot_chunck_utils.c main.c
 		
 SRC = $(addprefix $(SRC_DIR)/, $(C_FILES))
 OBJ = $(addprefix $(OBJ_DIR)/, $(C_FILES:.c=.o))
@@ -76,4 +76,3 @@ fclean: clean
 	@echo "EVERYTHING WAS CLEANED"
 
 re: fclean all
-	@re -C $(LIBNAME)

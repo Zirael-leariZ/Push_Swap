@@ -6,7 +6,7 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:36:13 by oishchen          #+#    #+#             */
-/*   Updated: 2025/05/13 14:13:30 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/15 13:26:15 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ int		steps_in_a(t_que *a, t_que_node *b_node, int *ra_or_rra);
 void	push_to_a(t_que *a, t_que *b, t_que_node *b_node);
 
 //EFFICIENCY functions
-void	prep_que(t_que *a, t_que *b, int low_border, int high_border);
-
+void	prep_que(t_que *a, t_que *b, int chunck, int t_used);
+void	check_sa_ss_sb(t_que *a, t_que *b);
 
 // EXECUTE BACK_SORT
 void	exe_rb_rra(t_que *a, t_que *b, int rb_nb, int rra_nb);
@@ -81,7 +81,7 @@ void	three_sort(t_que *a);
 //parse input ac && av
 t_que	*parse_input(int ac, char *av[]);
 char	*no_space_str(char *src, char *dest, int *cur_pos);
-void	atoi_to_que(char *str, t_que *arr_a);
+void	atoi_to_que(char *str, t_que **arr_a);
 int		ft_isspace(int c);
 int		is_in_que(t_que *arr, int cur_val);
 
@@ -89,12 +89,11 @@ int		is_in_que(t_que *arr, int cur_val);
 void print_circular_arr(t_que *arr, char *arr_type);
 void print_arr(int *arr_int, int size, char *which_arr);
 void print_index(t_que *arr, char *message);
-void	check_pa(t_que *a, t_que *b);
 
 //median search
 int	*cpy_que(t_que *arr_a);
 int *ft_sort(t_que **que_arr);
-int	*sort_arr(int *arr, int size);
+int	*sort_arr(int *arr, int size, t_que **a);
 void assign_index(t_que **que_list, int *arr);
 // int	*cumulative_arr(int *arr);
 // int	find_max(int *arr, int size);
@@ -124,6 +123,7 @@ void	sa(t_que *arr_a);
 // general utils
 t_que	*create_list(void);
 void	free_each_node_exit(t_que **arr);
-t_que	*append_value_bottom(t_que *lst, int data);
+void	free_each_node(t_que **arr);
+t_que	*append_value_bottom(t_que **lst, int data);
 
 #endif

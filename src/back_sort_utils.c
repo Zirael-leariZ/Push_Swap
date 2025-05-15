@@ -6,7 +6,7 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:15:17 by oishchen          #+#    #+#             */
-/*   Updated: 2025/05/13 15:35:20 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/15 12:26:42 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,25 @@ int	find_min_idx(t_que *a)
 		i++;
 	}
 	return (min);
+}
+
+int	find_max_idx(t_que *a)
+{
+	int			max;
+	int			i;
+	t_que_node	*temp;
+
+	temp = a->head;
+	max = temp->index;
+	i = 0;
+	while (i < a->size)
+	{
+		if (temp->index > max)
+			max = temp->index;
+		temp = temp->next;
+		i++;
+	}
+	return (max);
 }
 
 int	steps_in_b(t_que *b, t_que_node *b_node, int *rb_or_rrb)
@@ -70,20 +89,24 @@ int	count_ra(t_que *a, t_que_node *b_node)
 	int			ra;
 	int			is_found;
 	int			min_idx;
+	int			max_idx;
 
 	temp = a->head;
 	ra = 0;
 	min_idx = find_min_idx(a);
+	max_idx = find_max_idx(a);
 	is_found = (temp->prv->index < b_node->index
 			&& temp->index > b_node->index)
-			|| (b_node->index < min_idx && temp->index == min_idx);
+			|| (b_node->index < min_idx && temp->index == min_idx)
+			|| (b_node->index > max_idx && temp->prv->index == max_idx);
 	while (!is_found)
 	{
 		temp = temp->next;
 		ra++;
 		is_found = (temp->prv->index < b_node->index
 			&& temp->index > b_node->index)
-			|| (b_node->index < min_idx && temp->index == min_idx);
+			|| (b_node->index < min_idx && temp->index == min_idx)
+			|| (b_node->index > max_idx && temp->prv->index == max_idx);
 	}
 	return (ra);
 }
@@ -94,35 +117,35 @@ int	count_rra(t_que *a, t_que_node *b_node)
 	int			rra;
 	int			is_found;
 	int			min_idx;
+	int			max_idx;
 
 	temp = a->head;
 	min_idx = find_min_idx(a);
+	max_idx = find_max_idx(a);
 	rra = 0;
 	is_found = (temp->prv->index < b_node->index
 			&& temp->index > b_node->index)
-			|| (b_node->index < min_idx && temp->index == min_idx);
+			|| (b_node->index < min_idx && temp->index == min_idx)
+			|| (b_node->index > max_idx && temp->prv->index == max_idx);
 	while (!is_found)
 	{
 		temp = temp->prv;
 		rra++;
 		is_found = (temp->prv->index < b_node->index
 			&& temp->index > b_node->index)
-			|| (b_node->index < min_idx && temp->index == min_idx);
+			|| (b_node->index < min_idx && temp->index == min_idx)
+			|| (b_node->index > max_idx && temp->prv->index == max_idx);
 	}
 	return (rra);
 }
 
 int	steps_in_a(t_que *a, t_que_node *b_node, int *ra_or_rra)
 {
-	t_que_node	*temp;
 	int			ra;
 	int			rra;
-	int			is_found;
 
 	ra = 0;
 	rra = 0;
-	temp = a->head;
-	is_found = 0;
 	ra = count_ra(a, b_node);
 	rra = count_rra(a, b_node);
 	if (ra <= rra)

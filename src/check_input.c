@@ -6,7 +6,7 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 21:48:52 by oishchen          #+#    #+#             */
-/*   Updated: 2025/05/13 16:07:37 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/14 09:02:04 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	is_in_que(t_que *arr, int cur_val)
 	return (0);
 }
 
-void	atoi_to_que(char *str, t_que *arr_a)
+void	atoi_to_que(char *str, t_que **arr_a)
 {
 	int			sign;
 	long long	res;
@@ -56,13 +56,13 @@ void	atoi_to_que(char *str, t_que *arr_a)
 			res = res * 10 + (*str - '0');
 			str++;
 		}
-		if (!is_in_que(arr_a, res))
-			append_value_bottom(arr_a, (res * sign));
-		else
+		if (!is_in_que(*arr_a, res))
 		{
-			ft_printf("FUCK YOURSELF, please no repeat values\n"); // delete that
-			free_each_node_exit(&arr_a);
+			if (!append_value_bottom(arr_a, (res * sign)))
+				free_each_node_exit(arr_a);
 		}
+		else
+			free_each_node_exit(arr_a);
 	}
 }
 
@@ -102,21 +102,18 @@ t_que	*parse_input(int ac, char *av[])
 	char	*input;
 	int		cur_pos;
 
-	arr_a = NULL;
 	cur_pos = 0;
 	i = 1;
 	arr_a = create_list();
+	if (!arr_a)
+		return (NULL);
 	while (av[i] && ac > 1) // make sure that one digit is legit
 	{
 		input = no_space_str(av[i], input, &cur_pos);
 		if (!input && av[i][cur_pos])
-		{
-			ft_printf("FUCK YOU, the input is invalid\n");
 			return (free_each_node_exit(&arr_a), NULL);
-		}
-			
 		else if (input)
-			atoi_to_que(input, arr_a);
+			atoi_to_que(input, &arr_a);
 		free(input);
 		if (!av[i][cur_pos])
 		{
@@ -127,41 +124,4 @@ t_que	*parse_input(int ac, char *av[])
 	return (arr_a);
 }
 
-int main(int ac, char *av[])
-{
-	if (ac > 1)
-	{
-		t_que	*a;
-		t_que	*b;
-		int		*arr_int;
-		// int		chuncks;
 
-		a = parse_input(ac, av);
-		b = create_list();
-		arr_int = ft_sort(&a);
-		// print_circular_arr(a, "a after parse");
-		// print_circular_arr(b, "b after parse");
-		// chuncks = derive_chuncks(a->size);
-		while (!is_fully_sorted(a))
-		{
-			pivot_sort(a, b);
-
-		// print_circular_arr(a, "a after pivot");
-		// print_circular_arr(b, "b after pivot");
-
-			chunck_sort(a, b);
-
-		// print_circular_arr(a, "a after chunck");
-		// print_circular_arr(b, "b after chunck");
-
-			back_sort(a, b);
-
-		print_circular_arr(a, "a after back_sort");
-		// print_circular_arr(b, "b after back_sort");
-		}
-		free_each_node_exit(&a);
-		free_each_node_exit(&b);
-		
-	}
-	return (0);
-}
