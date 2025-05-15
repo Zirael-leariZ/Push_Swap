@@ -6,7 +6,7 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:15:17 by oishchen          #+#    #+#             */
-/*   Updated: 2025/05/15 12:26:42 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/15 19:34:48 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,22 +193,22 @@ void	push_to_a(t_que *a, t_que *b, t_que_node *b_node)
 			exe_rb_ra(a, b, b_right_pos, a_right_pos);
 		else
 			exe_rrb_rra(a, b, b_right_pos, a_right_pos);
-		pa(a, b);
+		pa(a, b, 0);
 		return ;
 	}
 	if (rb_or_rrb == 1)
 		exe_rb_rra(a, b, b_right_pos, a_right_pos);
 	else
 		exe_rrb_ra(a, b, b_right_pos, a_right_pos);
-	pa(a, b);
+	pa(a, b, 0);
 	return ;
 }
 void	exe_rb_rra(t_que *a, t_que *b, int rb_nb, int rra_nb)
 {
 	while (rb_nb--)
-		rb(b);
+		rb(b, 0);
 	while (rra_nb--)
-		rra(a);
+		rra(a, 0);
 }
 
 void	exe_rb_ra(t_que *a, t_que *b, int rb_nb, int ra_nb)
@@ -217,26 +217,26 @@ void	exe_rb_ra(t_que *a, t_que *b, int rb_nb, int ra_nb)
 	{
 		ra_nb -= rb_nb;
 		while (rb_nb--)
-			rr(a, b);
+			rr(a, b, 0);
 		while (ra_nb--)
-			ra(a);
+			ra(a, 0);
 	}
 	else
 	{
 		rb_nb -= ra_nb;
 		while (ra_nb--)
-			rr(a, b);
+			rr(a, b, 0);
 		while (rb_nb--)
-			rb(b);
+			rb(b, 0);
 	}
 }
 
 void	exe_rrb_ra(t_que *a, t_que *b, int rrb_nb, int ra_nb)
 {
 	while (rrb_nb--)
-		rrb(b);
+		rrb(b, 0);
 	while (ra_nb--)
-		ra(a);
+		ra(a, 0);
 }
 
 void	exe_rrb_rra(t_que *a, t_que *b, int rrb_nb, int rra_nb)
@@ -245,16 +245,16 @@ void	exe_rrb_rra(t_que *a, t_que *b, int rrb_nb, int rra_nb)
 	{
 		rra_nb -= rrb_nb;
 		while (rrb_nb--)
-			rrr(a, b);
+			rrr(a, b, 0);
 		while (rra_nb--)
-			rra(a);
+			rra(a, 0);
 	}
 	else
 	{
 		rrb_nb -= rra_nb;
 		while (rra_nb--)
-			rrr(a, b);
+			rrr(a, b, 0);
 		while (rrb_nb--)
-			rrb(b);
+			rrb(b, 0);
 	}
 }

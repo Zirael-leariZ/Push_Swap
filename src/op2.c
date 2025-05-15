@@ -6,37 +6,40 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 12:29:36 by oishchen          #+#    #+#             */
-/*   Updated: 2025/05/13 11:40:18 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/15 21:51:31 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	sa(t_que *arr_a)
+void	sa(t_que *arr_a, int is_silent)
 {
 	if (arr_a->size > 1)
 	{
 		ft_list_swap(arr_a);
-		ft_printf("sa\n");
+		if (!is_silent)
+			ft_printf("sa\n");
 	}
 }
 
-void	sb(t_que *arr_b)
+void	sb(t_que *arr_b, int is_silent)
 {
 	if (arr_b->size > 1)
 	{
 		ft_list_swap(arr_b);
-		ft_printf("sb\n");
+		if (!is_silent)
+			ft_printf("sb\n");
 	}
 }
 
-void	ss(t_que *arr_a, t_que *arr_b)
+void	ss(t_que *arr_a, t_que *arr_b, int is_silent)
 {
 	if (arr_a->size > 1 && arr_b->size > 1)
 	{
 		ft_list_swap(arr_a);
 		ft_list_swap(arr_b);
-		ft_printf("ss\n");
+		if (!is_silent)
+			ft_printf("ss\n");
 	}
 }
 
@@ -69,7 +72,7 @@ void	pb(t_que *arr_a, t_que *arr_b)
 	ft_printf("pb\n");
 }
 
-void	pa(t_que *arr_a, t_que *arr_b)
+void	pa(t_que *arr_a, t_que *arr_b, int is_silent)
 {
 	t_que_node	*temp;
 
@@ -91,5 +94,6 @@ void	pa(t_que *arr_a, t_que *arr_b)
 	arr_b->head = temp;
 	arr_a->size++;
 	arr_b->size--;
-	ft_printf("pa\n");
+	if (!is_silent)
+		ft_printf("pa\n");
 }

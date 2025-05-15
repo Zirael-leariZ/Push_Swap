@@ -6,7 +6,7 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:22:26 by oishchen          #+#    #+#             */
-/*   Updated: 2025/05/15 14:11:36 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/15 23:02:27 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	back_sort(t_que *a, t_que *b)
 	int			cur_steps;
 	int			steps;
 
-	// ft_printf("we are in the back sort\n");
 	while (b->size > 0)
 	{
 		min_node = b->head;
@@ -55,36 +54,31 @@ void	back_sort(t_que *a, t_que *b)
 			temp = temp->next;
 			nodes++;
 		}
-		// ft_printf("our min_node idx: %d\n", min_node->index);
-		// ft_printf("our head in a: %d\n", a->head->index);
 		push_to_a(a, b, min_node);
 	}
 }
 
-void	pivot_sort(t_que *a, t_que *b)
-{
-	int	push_nb;
-	int	pivot;
+// void	pivot_sort(t_que *a, t_que *b)
+// {
+// 	int	push_nb;
+// 	int	pivot;
 
-	push_nb = 0;
+// 	push_nb = 0;
 	
-	pivot = a->size / 2;
-	// ft_printf("pivot is : %d\n", pivot);
-	//
-	while (push_nb <= pivot && a->size > 3)
-	{
-		if (a->head->index <= pivot)
-		{
-			pb(a, b);
-			push_nb++;
-		}
-		prep_que(a, b, pivot, 1);
-		check_sa_ss_sb(a, b);
-	}
-		// ft_printf("push_nb: %d\n", push_nb);
-	if (a->size == 3)
-		three_sort(a);
-}
+// 	pivot = a->size / 2;
+// 	while (push_nb <= pivot && a->size > 3)
+// 	{
+// 		if (a->head->index <= pivot)
+// 		{
+// 			pb(a, b);
+// 			push_nb++;
+// 		}
+// 		prep_que(a, b, pivot, 1);
+// 		check_sa_ss_sb(a, b);
+// 	}
+// 	if (a->size == 3)
+// 		three_sort(a);
+// }
 
 void	chunck_sort(t_que *a, t_que *b)
 {
@@ -98,29 +92,17 @@ void	chunck_sort(t_que *a, t_que *b)
 		chunck = 25;
 	else if (a->size + b->size < 100)
 		chunck = 20;
-	// if (a->size + b->size <= 100)
-	// 	chunck = 25;
-	// ft_printf("we are out pivot_sort\n");
 	while (chunck * i < (a->size + b->size) / 2)
 		i++;
 	while (a->size > 3)
 	{
-		// ft_printf("our pivot: %d\n", pivot);
-		// ft_printf("our low_border: %d\n", low_border);
-		// ft_printf("our push_nb%d\n", push_nb);
-		// ft_printf("our border is chucnk * i %d\n", chunck * i);
 		while (index_in_que(a, chunck * i) && a->size > 3)
 		{
 			if (a->head->index <= chunck * i)
 				pb(a, b);
 			prep_que(a, b, chunck, i);
-			// ft_printf("we are stacked\n");
 		}
 		i++;
-		// print_circular_arr(a, "a after chunck");
-		// print_circular_arr(b, "b after chunck");
-		// ft_printf("we are STACKED\n");
-		// print_circular_arr(a, "a after first_chucnk");
 	}
 	three_sort(a);
 }

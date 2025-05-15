@@ -6,7 +6,7 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 21:51:47 by oishchen          #+#    #+#             */
-/*   Updated: 2025/05/12 22:00:40 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/15 19:33:27 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ int	rewind_que(t_que *a, int begin_idx)
 	{
 		begin_idx = a->size - begin_idx;
 		while (begin_idx--)
-			rra(a);
+			rra(a, 0);
 	}
 	else
 		while (begin_idx--)
-			ra(a);
+			ra(a, 0);
 	return (1);
 }
 
@@ -76,10 +76,10 @@ void	three_sort(t_que *a)
 	while (!is_fully_sorted(a) && a->size > 1)
 	{
 		if (a->head->prv->index < a->head->next->index)
-			rra(a);
+			rra(a, 0);
 		if (a->head->index > a->head->next->index)
-			sa(a);
+			sa(a, 0);
 		if (a->head->index > a->head->next->index)
-			ra(a);
+			ra(a, 0);
 	}
 }

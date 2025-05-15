@@ -6,43 +6,59 @@
 #    By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/23 12:27:49 by oishchen          #+#    #+#              #
-#    Updated: 2025/05/15 10:42:59 by oishchen         ###   ########.fr        #
+#    Updated: 2025/05/15 23:03:16 by oishchen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 INCLUDE = $(LIBNAME)/libft/includes/ \
-		$(LIBNAME)/printf/includes/
+		$(LIBNAME)/printf/includes/ \
+		$(LIBNAME)/get_next_line/includes/
 OWN_INCLUDE = include/
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g\
+CFLAGS = -Wall -Wextra -Werror -g \
 		$(addprefix -I, $(INCLUDE)) \
 		-I$(OWN_INCLUDE)
 RM = rm -rf
+
+NAME = push_swap
+CHECKER = checker
 
 LIB_REPO_PASS = https://github.com/Zirael-leariZ/42_lib_mix
 LIBNAME = mixlibft
 LIBNAME_A = $(LIBNAME)/mixlibft.a
 SRC_DIR = src
 OBJ_DIR = obj
-NAME = push_swap
 
-C_FILES = check_input.c op1.c op2.c op_utils.c utils.c \
-		find_median.c temp.c sort_utils.c back_sort_utils.c \
-		op3.c is_sorted.c pivot_chunck_utils.c main.c
-		
-SRC = $(addprefix $(SRC_DIR)/, $(C_FILES))
-OBJ = $(addprefix $(OBJ_DIR)/, $(C_FILES:.c=.o))
+# Common source files (shared between both programs)
+COMMON_FILES = check_input.c op1.c op2.c op_utils.c utils.c \
+				find_median.c temp.c sort_utils.c back_sort_utils.c \
+				op3.c is_sorted.c pivot_chunck_utils.c
+
+# Program-specific source files
+PUSH_SWAP_SRC = main.c
+CHECKER_SRC = checker.c
+
+# Object files
+COMMON_OBJ = $(addprefix $(OBJ_DIR)/, $(COMMON_FILES:.c=.o))
+PUSH_SWAP_OBJ = $(COMMON_OBJ) $(addprefix $(OBJ_DIR)/, $(PUSH_SWAP_SRC:.c=.o))
+CHECKER_OBJ = $(COMMON_OBJ) $(addprefix $(OBJ_DIR)/, $(CHECKER_SRC:.c=.o))
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(LIBNAME_A)
-	$(CC) $(CFLAGS) $(OBJ) $(LIBNAME_A) -o $@
-	@echo "BULIDING PUSH_SWAP"
+check: $(CHECKER)
+
+$(NAME): $(PUSH_SWAP_OBJ) $(LIBNAME_A)
+	$(CC) $(CFLAGS) $^ -o $@
+	@echo "BUILDING PUSH_SWAP"
+
+$(CHECKER): $(CHECKER_OBJ) $(LIBNAME_A)
+	$(CC) $(CFLAGS) $^ -o $@
+	@echo "BUILDING CHECKER"
 
 $(LIBNAME):
 	@if [ ! -d $(LIBNAME) ]; then \
-		echo "CLONNING LIBRARY_REPO"; \
+		echo "CLONING LIBRARY_REPO"; \
 		git clone $(LIB_REPO_PASS) $(LIBNAME); \
 	else \
 		echo "REPOSITORY EXISTS"; \
@@ -57,22 +73,22 @@ $(LIBNAME_A): | $(LIBNAME)
 	fi
 
 $(OBJ_DIR):
-	@if [ ! -d $(OBJ_DIR) ]; then \
-		mkdir $(OBJ_DIR); \
-	fi
+	@mkdir -p $@
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR) $(LIBNAME_A)
 	@$(CC) $(CFLAGS) -c $< -o $@
-	echo "BULDING OBJ FROM SRC"
+	@echo "BUILDING OBJ: $@"
 
 clean:
 	@make clean -C $(LIBNAME)
 	@$(RM) $(OBJ_DIR)
-	@echo "OBJ WERE CLEANED"
+	@echo "OBJECTS CLEANED"
 
 fclean: clean
-	@$(RM) $(NAME)
+	@$(RM) $(NAME) $(CHECKER)
 	@make fclean -C $(LIBNAME)
-	@echo "EVERYTHING WAS CLEANED"
+	@echo "FULL CLEAN COMPLETE"
 
 re: fclean all
+
+.PHONY: all clean fclean re check
