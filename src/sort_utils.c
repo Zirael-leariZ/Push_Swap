@@ -6,7 +6,7 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:22:26 by oishchen          #+#    #+#             */
-/*   Updated: 2025/05/15 13:36:41 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/15 14:11:36 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,14 @@ void	chunck_sort(t_que *a, t_que *b)
 	int	i;
 
 	i = 1;
-	chunck = 20;
+	if (a->size + b->size >= 450)
+		chunck = 50;
+	if (a->size + b->size < 450 && a->size + b->size >= 100)
+		chunck = 25;
+	else if (a->size + b->size < 100)
+		chunck = 20;
+	// if (a->size + b->size <= 100)
+	// 	chunck = 25;
 	// ft_printf("we are out pivot_sort\n");
 	while (chunck * i < (a->size + b->size) / 2)
 		i++;

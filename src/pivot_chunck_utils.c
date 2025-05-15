@@ -6,7 +6,7 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 15:43:16 by oishchen          #+#    #+#             */
-/*   Updated: 2025/05/15 13:36:42 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/15 14:03:48 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	nb_ra(t_que	*a, t_que *b, int chunck, int t_used)
 	int			ra_nb;
 	int			high_border;
 
+	(void)a;
+	(void)b;
 	ra_nb = 0;
 	high_border = chunck * t_used;
 	if (b->size < a->size)
@@ -38,11 +40,13 @@ int	nb_rb(t_que *a, t_que *b, int chunck, int t_used)
 	t_que_node	*b_node;
 	int			border;
 
+	(void)a;
+	(void)b;
 	if (!b->head || !b)
 		return (0);
 	border = (chunck) / 2 + (chunck * (t_used - 1));
 	if (b->size < a->size)
-		border = (a->size + b->size) / 2;
+		border = (a->size + b->size) / 4;
 	b_node = b->head;
 	if (b_node->index <= border && b_node->index < b_node->next->index)
 		return (1);
@@ -80,6 +84,8 @@ int	nb_rra(t_que *a, t_que *b, int chunck, int t_used)
 	int			rra_nb;
 	int			high_border;
 
+	(void)a;
+	(void)b;
 	high_border = chunck * t_used;
 	if (b->size < a->size)
 		high_border = (a->size + b->size) / 2;
@@ -104,10 +110,10 @@ void	prep_que(t_que *a, t_que *b, int chunck, int t_used)
 	ra_nb = nb_ra(a, b, chunck, t_used);
 	// ft_printf("nb_ra is: %d\n", ra_nb);
 	rra_nb = nb_rra(a, b, chunck, t_used);
-	rb_nb = 0;
-	if (t_used == 1)
+	// rb_nb = 0;
+	// if (t_used == 1)
 	// ft_printf("nb_rra is: %d\n", rra_nb);
-		rb_nb = nb_rb(a, b, chunck, t_used);
+	rb_nb = nb_rb(a, b, chunck, t_used);
 	// ft_printf("nb_rb is: %d\n", rb_nb);
 	if (rra_nb < ra_nb)
 	{
