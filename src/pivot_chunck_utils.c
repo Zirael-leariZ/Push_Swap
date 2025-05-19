@@ -6,7 +6,7 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 15:43:16 by oishchen          #+#    #+#             */
-/*   Updated: 2025/05/15 19:32:43 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/19 10:24:54 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	ra_rb_rr(t_que *a, t_que *b, int ra_nb, int rb_nb)
 	}
 	else
 	{
-		while(ra_nb--)
+		while (ra_nb--)
 			ra(a, 0);
 		while (rb_nb--)
 			rb(b, 0);
@@ -120,4 +120,3 @@ void	prep_que(t_que *a, t_que *b, int chunck, int t_used)
 	else
 		ra_rb_rr(a, b, ra_nb, rb_nb);
 }
-

@@ -6,12 +6,11 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 21:51:47 by oishchen          #+#    #+#             */
-/*   Updated: 2025/05/15 19:33:27 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/19 12:35:45 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
 
 int	is_sorted(t_que_node *a_node, int size)
 {
@@ -51,24 +50,18 @@ int	is_fully_sorted(t_que *a)
 	int			i;
 	int			flg;
 
-	// if (b->size == 0)
-	// {
-		i = 0;
-		flg = 0;
-		a_node = a->head;
-		while (i < a->size)
-		{
-			flg = is_sorted(a_node, a->size);
-			// ft_printf("our flag is : %d\n", flg);
-			if (flg)
-				return (rewind_que(a, i));
-			a_node = a_node->next;
-			i++;
-		}
-		// ft_printf("not is fully sorted\n");
-		return (0);
-	// }
-	// return (0);
+	i = 0;
+	flg = 0;
+	a_node = a->head;
+	while (i < a->size)
+	{
+		flg = is_sorted(a_node, a->size);
+		if (flg)
+			return (rewind_que(a, i));
+		a_node = a_node->next;
+		i++;
+	}
+	return (0);
 }
 
 void	three_sort(t_que *a)

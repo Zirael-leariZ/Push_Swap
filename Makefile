@@ -6,7 +6,7 @@
 #    By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/23 12:27:49 by oishchen          #+#    #+#              #
-#    Updated: 2025/05/15 23:03:16 by oishchen         ###   ########.fr        #
+#    Updated: 2025/05/19 12:50:51 by oishchen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,12 +32,12 @@ OBJ_DIR = obj
 
 # Common source files (shared between both programs)
 COMMON_FILES = check_input.c op1.c op2.c op_utils.c utils.c \
-				find_median.c temp.c sort_utils.c back_sort_utils.c \
-				op3.c is_sorted.c pivot_chunck_utils.c
+				find_median.c sort_utils.c back_sort_utils.c op3.c is_sorted.c \
+				pivot_chunck_utils.c main.c check_input.c back_sort_exe.c
 
 # Program-specific source files
 PUSH_SWAP_SRC = main.c
-CHECKER_SRC = checker.c
+CHECKER_SRC = checker.c checker_utils.c
 
 # Object files
 COMMON_OBJ = $(addprefix $(OBJ_DIR)/, $(COMMON_FILES:.c=.o))

@@ -6,7 +6,7 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 14:41:59 by oishchen          #+#    #+#             */
-/*   Updated: 2025/05/15 14:24:56 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/19 12:09:31 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 t_que	*append_value_bottom(t_que **lst, int data)
 {
-	t_que_node *new;
+	t_que_node	*new;
 
 	if (!lst)
 		return (NULL);
 	new = (t_que_node *)malloc(sizeof(t_que_node));
 	if (!new)
-		free_each_node_exit(lst);
+		free_each_node_exit(lst, 1);
 	if ((*lst)->size == 0)
 	{
 		new->next = new;
@@ -39,13 +39,13 @@ t_que	*append_value_bottom(t_que **lst, int data)
 	return (*lst);
 }
 
-void	free_each_node_exit(t_que **arr)
+void	free_each_node_exit(t_que **arr, int status)
 {
 	t_que_node	*temp;
-	int		i;
+	int			i;
 
 	i = 0;
-	if ((*arr)->head)
+	if ((*arr)->size > 0)
 	{
 		temp = (*arr)->head;
 		while (i < (*arr)->size)
@@ -58,13 +58,13 @@ void	free_each_node_exit(t_que **arr)
 	}
 	if (*arr)
 		free(*arr);
-	exit(0);
+	exit(status);
 }
 
 void	free_each_node(t_que **arr)
 {
 	t_que_node	*temp;
-	int		i;
+	int			i;
 
 	i = 0;
 	if ((*arr)->head)
@@ -88,8 +88,21 @@ t_que	*create_list(void)
 
 	lst = (t_que *)malloc(sizeof(t_que));
 	if (!lst)
-		return (NULL);
+		return ((void *)0);
 	lst->head = NULL;
 	lst->size = 0;
 	return (lst);
+}
+
+int	calc_chunck(t_que *a, t_que *b)
+{
+	int	chunck;
+
+	if (a->size + b->size >= 450)
+		chunck = 50;
+	if (a->size + b->size < 450 && a->size + b->size >= 100)
+		chunck = 25;
+	else if (a->size + b->size < 100)
+		chunck = 20;
+	return (chunck);
 }

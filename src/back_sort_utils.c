@@ -6,53 +6,11 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:15:17 by oishchen          #+#    #+#             */
-/*   Updated: 2025/05/15 19:34:48 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/19 12:42:52 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-/*
-if rb_or_rrb = 1, rb was the most efficient
-if rb_or_rrb = -1, rrb was the most efficient
-*/
-
-int	find_min_idx(t_que *a)
-{
-	t_que_node	*temp;
-	int			min;
-	int			i;
-
-	temp = a->head;
-	min = temp->index;
-	i = 0;
-	while (i < a->size)
-	{
-		if (temp->index < min)
-			min = temp->index;
-		temp = temp->next;
-		i++;
-	}
-	return (min);
-}
-
-int	find_max_idx(t_que *a)
-{
-	int			max;
-	int			i;
-	t_que_node	*temp;
-
-	temp = a->head;
-	max = temp->index;
-	i = 0;
-	while (i < a->size)
-	{
-		if (temp->index > max)
-			max = temp->index;
-		temp = temp->next;
-		i++;
-	}
-	return (max);
-}
 
 int	steps_in_b(t_que *b, t_que_node *b_node, int *rb_or_rrb)
 {
@@ -72,7 +30,7 @@ int	steps_in_b(t_que *b, t_que_node *b_node, int *rb_or_rrb)
 	while (temp->val != b_node->val)
 	{
 		rrb++;
-		temp = temp->prv; 
+		temp = temp->prv;
 	}
 	if (rb <= rrb)
 	{
@@ -81,34 +39,6 @@ int	steps_in_b(t_que *b, t_que_node *b_node, int *rb_or_rrb)
 	}
 	*rb_or_rrb = -1;
 	return (rrb);
-}
-
-int	count_ra(t_que *a, t_que_node *b_node)
-{
-	t_que_node	*temp;
-	int			ra;
-	int			is_found;
-	int			min_idx;
-	int			max_idx;
-
-	temp = a->head;
-	ra = 0;
-	min_idx = find_min_idx(a);
-	max_idx = find_max_idx(a);
-	is_found = (temp->prv->index < b_node->index
-			&& temp->index > b_node->index)
-			|| (b_node->index < min_idx && temp->index == min_idx)
-			|| (b_node->index > max_idx && temp->prv->index == max_idx);
-	while (!is_found)
-	{
-		temp = temp->next;
-		ra++;
-		is_found = (temp->prv->index < b_node->index
-			&& temp->index > b_node->index)
-			|| (b_node->index < min_idx && temp->index == min_idx)
-			|| (b_node->index > max_idx && temp->prv->index == max_idx);
-	}
-	return (ra);
 }
 
 int	count_rra(t_que *a, t_que_node *b_node)
@@ -125,14 +55,14 @@ int	count_rra(t_que *a, t_que_node *b_node)
 	rra = 0;
 	is_found = (temp->prv->index < b_node->index
 			&& temp->index > b_node->index)
-			|| (b_node->index < min_idx && temp->index == min_idx)
-			|| (b_node->index > max_idx && temp->prv->index == max_idx);
+		|| (b_node->index < min_idx && temp->index == min_idx)
+		|| (b_node->index > max_idx && temp->prv->index == max_idx);
 	while (!is_found)
 	{
 		temp = temp->prv;
 		rra++;
 		is_found = (temp->prv->index < b_node->index
-			&& temp->index > b_node->index)
+				&& temp->index > b_node->index)
 			|| (b_node->index < min_idx && temp->index == min_idx)
 			|| (b_node->index > max_idx && temp->prv->index == max_idx);
 	}
@@ -164,11 +94,8 @@ int	count_steps(t_que *a, t_que *b, t_que_node *b_node)
 	int	rb_or_rrb;
 	int	ra_or_rra;
 
-	// ft_printf("current node->idx is: %d\n", b_node->index);
 	b_to_right_pos = steps_in_b(b, b_node, &rb_or_rrb);
-	// ft_printf("steps in b: %d, direction: %d\n", b_to_right_pos, rb_or_rrb);
 	a_to_right_pos = steps_in_a(a, b_node, &ra_or_rra);
-	// ft_printf("steps in a: %d, direction: %d\n", a_to_right_pos, ra_or_rra);
 	if (rb_or_rrb == ra_or_rra)
 	{
 		if (b_to_right_pos <= a_to_right_pos)
@@ -202,59 +129,4 @@ void	push_to_a(t_que *a, t_que *b, t_que_node *b_node)
 		exe_rrb_ra(a, b, b_right_pos, a_right_pos);
 	pa(a, b, 0);
 	return ;
-}
-void	exe_rb_rra(t_que *a, t_que *b, int rb_nb, int rra_nb)
-{
-	while (rb_nb--)
-		rb(b, 0);
-	while (rra_nb--)
-		rra(a, 0);
-}
-
-void	exe_rb_ra(t_que *a, t_que *b, int rb_nb, int ra_nb)
-{
-	if (rb_nb <= ra_nb)
-	{
-		ra_nb -= rb_nb;
-		while (rb_nb--)
-			rr(a, b, 0);
-		while (ra_nb--)
-			ra(a, 0);
-	}
-	else
-	{
-		rb_nb -= ra_nb;
-		while (ra_nb--)
-			rr(a, b, 0);
-		while (rb_nb--)
-			rb(b, 0);
-	}
-}
-
-void	exe_rrb_ra(t_que *a, t_que *b, int rrb_nb, int ra_nb)
-{
-	while (rrb_nb--)
-		rrb(b, 0);
-	while (ra_nb--)
-		ra(a, 0);
-}
-
-void	exe_rrb_rra(t_que *a, t_que *b, int rrb_nb, int rra_nb)
-{
-	if (rrb_nb <= rra_nb)
-	{
-		rra_nb -= rrb_nb;
-		while (rrb_nb--)
-			rrr(a, b, 0);
-		while (rra_nb--)
-			rra(a, 0);
-	}
-	else
-	{
-		rrb_nb -= rra_nb;
-		while (rra_nb--)
-			rrr(a, b, 0);
-		while (rrb_nb--)
-			rrb(b, 0);
-	}
 }

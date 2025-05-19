@@ -6,7 +6,7 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:29:33 by oishchen          #+#    #+#             */
-/*   Updated: 2025/05/09 18:12:02 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/19 12:31:41 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,26 +41,40 @@ void	ft_list_swap(t_que *arr)
 	}
 }
 
-void	delete_head(t_que *arr)
+int	find_min_idx(t_que *a)
 {
-	t_que_node *cur_head;
-	
-	if (!arr || arr->size == 0)
-		return;
-	cur_head = arr->head;
-	if (arr->size == 1)
+	t_que_node	*temp;
+	int			min;
+	int			i;
+
+	temp = a->head;
+	min = temp->index;
+	i = 0;
+	while (i < a->size)
 	{
-		free(arr->head);
-		arr->head = NULL;
+		if (temp->index < min)
+			min = temp->index;
+		temp = temp->next;
+		i++;
 	}
-	else
-	{
-		arr->head->prv->next = arr->head->next;
-		arr->head->next->prv = arr->head->prv;
-		arr->head = arr->head->next;
-		free(cur_head);
-	}
-	arr->size--;
+	return (min);
 }
 
+int	find_max_idx(t_que *a)
+{
+	int			max;
+	int			i;
+	t_que_node	*temp;
 
+	temp = a->head;
+	max = temp->index;
+	i = 0;
+	while (i < a->size)
+	{
+		if (temp->index > max)
+			max = temp->index;
+		temp = temp->next;
+		i++;
+	}
+	return (max);
+}

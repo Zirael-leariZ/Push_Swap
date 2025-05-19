@@ -6,7 +6,7 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:32:29 by oishchen          #+#    #+#             */
-/*   Updated: 2025/05/15 19:04:31 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/19 11:02:33 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,5 @@ void	rrb(t_que *arr_b, int is_silent)
 {
 	rotate(arr_b, -1);
 	if (!is_silent)
-		ft_printf("rra\n");
+		ft_printf("rrb\n");
 }

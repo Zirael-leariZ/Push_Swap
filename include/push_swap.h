@@ -6,18 +6,24 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:36:13 by oishchen          #+#    #+#             */
-/*   Updated: 2025/05/15 19:07:21 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/19 12:39:01 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
-#define PUSH_SWAP_H
+# define PUSH_SWAP_H
 
-#include <unistd.h>
-#include <stdlib.h>
-#include "libft.h"
-#include "ft_printf.h"
-#include "get_next_line.h"
+# include <unistd.h>
+# include <stdlib.h>
+# include "libft.h"
+# include "ft_printf.h"
+# include "get_next_line.h"
+
+typedef struct s_ops
+{
+	void			*command;
+	struct s_ops	*next;
+}	t_ops;
 
 typedef struct s_que_node
 {
@@ -25,59 +31,64 @@ typedef struct s_que_node
 	struct s_que_node	*prv;
 	int					val;
 	int					index;
-} t_que_node;
+}	t_que_node;
 
-typedef struct	s_que
+typedef struct s_que
 {
 	t_que_node	*head;
 	int			size;
-} t_que;
+}	t_que;
 
 // sort suplementary
 void	chunck_sort(t_que *a, t_que *b);
 void	back_sort(t_que *a, t_que *b);
+void	five_sort(t_que *a, t_que *b);
+void	three_sort(t_que *a);
 
 //BACKSORT_UTILS
 int		count_steps(t_que *a, t_que *b, t_que_node *b_node);
 int		steps_in_b(t_que *b, t_que_node *b_node, int *rb_or_rrb);
 int		steps_in_a(t_que *a, t_que_node *b_node, int *ra_or_rra);
 void	push_to_a(t_que *a, t_que *b, t_que_node *b_node);
+int		find_min_idx(t_que *a);
+int		find_max_idx(t_que *a);
 
 //EFFICIENCY functions
 void	prep_que(t_que *a, t_que *b, int chunck, int t_used);
-void	check_sa_ss_sb(t_que *a, t_que *b);
+int		calc_chunck(t_que *a, t_que *b);
 
 // EXECUTE BACK_SORT
+int		count_rra(t_que *a, t_que_node *b_node);
+int		count_ra(t_que *a, t_que_node *b_node);
 void	exe_rb_rra(t_que *a, t_que *b, int rb_nb, int rra_nb);
 void	exe_rb_ra(t_que *a, t_que *b, int rb_nb, int ra_nb);
 void	exe_rrb_rra(t_que *a, t_que *b, int rrb_nb, int rra_nb);
 void	exe_rrb_ra(t_que *a, t_que *b, int rrb_nb, int ra_nb);
+void	push_to_a(t_que *a, t_que *b, t_que_node *b_node);
+int		count_steps(t_que *a, t_que *b, t_que_node *b_node);
+int		steps_in_a(t_que *a, t_que_node *b_node, int *ra_or_rra);
+int		steps_in_b(t_que *b, t_que_node *b_node, int *rb_or_rrb);
 
 // check for already sorted arr
 int		is_sorted(t_que_node *a_node, int size);
 int		rewind_que(t_que *a, int begin_idx);
 int		is_fully_sorted(t_que *a);
-void	three_sort(t_que *a);
 
 //parse input ac && av
 t_que	*parse_input(int ac, char *av[]);
 char	*no_space_str(char *src, char *dest, int *cur_pos);
-void	atoi_to_que(char *str, t_que **arr_a);
+void	atoi_to_que(char *str, t_que **arr_a, int sign);
+int		ft_isspace(int c);
 int		ft_isspace(int c);
 int		is_in_que(t_que *arr, int cur_val);
 
-//delete after
-// void print_circular_arr(t_que *arr, char *arr_type);
-// void print_arr(int *arr_int, int size, char *which_arr);
-// void print_index(t_que *arr, char *message);
-
-//median search
+//FIND MEDIAN
 int		*cpy_que(t_que *arr_a);
-int 	*ft_sort(t_que **que_arr);
+int		*ft_sort(t_que **que_arr, int *arr_sorted);
 int		*sort_arr(int *arr, int size, t_que **a);
-void	assign_index(t_que **que_list, int *arr);
+int		assign_index(t_que **que_list, int *arr);
 
-void	delete_head(t_que *arr);
+
 void	ft_list_swap(t_que *arr_a);
 void	rotate(t_que *arr_a, int i);
 
@@ -97,8 +108,18 @@ void	pb_silent(t_que *arr_a, t_que *arr_b);
 
 // general utils
 t_que	*create_list(void);
-void	free_each_node_exit(t_que **arr);
+void	free_each_node_exit(t_que **arr, int status);
 void	free_each_node(t_que **arr);
 t_que	*append_value_bottom(t_que **lst, int data);
+
+// CHEKER
+t_ops	*ft_find_last(t_ops *my_ops);
+int		apply_ops(t_que *a, t_que *b, t_ops *my_ops);
+void	free_ops(t_ops **ops);
+int		is_such_command(char *str);
+int		check_list(t_que *a);
+t_ops	*rg_ops(t_que **a, t_que **b);
+int		append_command(t_ops **my_ops, char *line);
+int		command_exe(t_que *a, t_que *b, char *line);
 
 #endif

@@ -6,37 +6,66 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:42:40 by oishchen          #+#    #+#             */
-/*   Updated: 2025/05/16 00:34:26 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/19 12:40:52 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int main(int ac, char *av[])
+t_que	*parse_input(int ac, char *av[])
 {
+	int		i;
+	t_que	*arr_a;
+	char	*input;
+	int		cur_pos;
+
+	cur_pos = 0;
+	i = 1;
+	arr_a = create_list();
+	if (!arr_a)
+		return (NULL);
+	while (av[i] && ac > 1)
+	{
+		input = no_space_str(av[i], input, &cur_pos);
+		if ((!input && av[i][cur_pos]) || (!input && ft_strlen(av[i]) == 0))
+			free_each_node_exit(&arr_a, 1);
+		else if (input)
+			atoi_to_que(input, &arr_a, 1);
+		free(input);
+		if (!av[i][cur_pos])
+		{
+			i++;
+			cur_pos = 0;
+		}
+	}
+	return (arr_a);
+}
+
+int	main(int ac, char *av[])
+{
+	t_que	*a;
+	t_que	*b;
+	int		*arr_int;
+
+	arr_int = NULL;
 	if (ac > 1)
 	{
-		t_que	*a;
-		t_que	*b;
-		int		*arr_int;
-
-		(void)arr_int;
 		a = parse_input(ac, av);
-			if (!a)
-				return (write(2, "ERROR\n", 6));
+		if (!a)
+			return (write(2, "Error\n", 6), 1);
 		b = create_list();
-			if (!b)
-				free_each_node_exit(&a);
-		arr_int = ft_sort(&a);
+		if (!b)
+			free_each_node_exit(&a, 1);
+		arr_int = ft_sort(&a, arr_int);
 		free(arr_int);
-		if (!is_fully_sorted(a))
+		while (!is_fully_sorted(a) && arr_int)
 		{
+			five_sort(a, b);
 			chunck_sort(a, b);
 			back_sort(a, b);
-			is_fully_sorted(a);
 		}
 		free_each_node(&a);
-		free_each_node_exit(&b);
+		free_each_node_exit(&b, 0);
 	}
-	return (0);
+	return (write(1, "\n", 1), 0);
 }

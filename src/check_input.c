@@ -6,13 +6,20 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 21:48:52 by oishchen          #+#    #+#             */
-/*   Updated: 2025/05/15 14:24:52 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/19 12:41:24 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include "libft.h"
 #include "ft_printf.h"
+
+int	is_allowed_val(long long res)
+{
+	if (res <= -2147483648 || res > 2147483647)
+		return (write(2, "Error\n", 6), 0);
+	return (1);
+}
 
 int	ft_isspace(int c)
 {
@@ -29,19 +36,17 @@ int	is_in_que(t_que *arr, int cur_val)
 	while (i < arr->size)
 	{
 		if (cpy->head->val == cur_val)
-			return (1);
+			return (write(2, "Error\n", 6), 1);
 		i++;
 		cpy->head = cpy->head->next;
 	}
 	return (0);
 }
 
-void	atoi_to_que(char *str, t_que **arr_a)
+void	atoi_to_que(char *str, t_que **arr_a, int sign)
 {
-	int			sign;
 	long long	res;
 
-	sign = 1;
 	while (*str)
 	{
 		res = 0;
@@ -56,13 +61,13 @@ void	atoi_to_que(char *str, t_que **arr_a)
 			res = res * 10 + (*str - '0');
 			str++;
 		}
-		if (!is_in_que(*arr_a, res))
+		if (!is_in_que(*arr_a, res * sign) && is_allowed_val(res))
 		{
 			if (!append_value_bottom(arr_a, (res * sign)))
-				free_each_node_exit(arr_a);
+				free_each_node_exit(arr_a, 1);
 		}
 		else
-			free_each_node_exit(arr_a);
+			free_each_node_exit(arr_a, 1);
 	}
 }
 
@@ -74,54 +79,23 @@ char	*no_space_str(char *src, char *dest, int *cur_pos)
 	dest = NULL;
 	while (src[i])
 	{
-		while(src[i] && ft_isspace(src[i]))
+		while (src[i] && ft_isspace(src[i]))
 			i++;
 		*cur_pos = i;
 		if ((src[i] == '+' || src[i] == '-') && ft_isdigit(src[i + 1]))
 			i++;
 		if (src[i] && !ft_isdigit(src[i]))
-			return (NULL);
+			return (write(2, "Error\n", 6), NULL);
 		while (src[i] && ft_isdigit(src[i]))
 			i++;
-		if (src[i] && !ft_isspace(src[i]) )
-			return (NULL);
+		if (src[i] && !ft_isspace(src[i]))
+			return (write(2, "Error\n", 6), NULL);
 		if (i > *cur_pos)
 			dest = ft_substr(src, *cur_pos, i - *cur_pos);
-		while(src[i] && ft_isspace(src[i]))
+		while (src[i] && ft_isspace(src[i]))
 			i++;
 		*cur_pos = i;
 		return (dest);
 	}
-	return (NULL);
+	return (write(2, "Error\n", 6), NULL);
 }
-
-t_que	*parse_input(int ac, char *av[])
-{
-	int		i;
-	t_que	*arr_a;
-	char	*input;
-	int		cur_pos;
-
-	cur_pos = 0;
-	i = 1;
-	arr_a = create_list();
-	if (!arr_a)
-		return (NULL);
-	while (av[i] && ac > 1) // make sure that one digit is legit
-	{
-		input = no_space_str(av[i], input, &cur_pos);
-		if (!input && av[i][cur_pos])
-			return (free_each_node_exit(&arr_a), NULL);
-		else if (input)
-			atoi_to_que(input, &arr_a);
-		free(input);
-		if (!av[i][cur_pos])
-		{
-			i++;
-			cur_pos = 0;
-		}
-	}
-	return (arr_a);
-}
-
-
