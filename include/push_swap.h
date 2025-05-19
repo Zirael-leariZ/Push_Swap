@@ -6,7 +6,7 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:36:13 by oishchen          #+#    #+#             */
-/*   Updated: 2025/05/19 12:39:01 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/19 15:10:28 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int		is_fully_sorted(t_que *a);
 //parse input ac && av
 t_que	*parse_input(int ac, char *av[]);
 char	*no_space_str(char *src, char *dest, int *cur_pos);
-void	atoi_to_que(char *str, t_que **arr_a, int sign);
+int		atoi_to_que(char *str, t_que **arr_a, int sign);
 int		ft_isspace(int c);
 int		ft_isspace(int c);
 int		is_in_que(t_que *arr, int cur_val);
@@ -88,7 +88,7 @@ int		*ft_sort(t_que **que_arr, int *arr_sorted);
 int		*sort_arr(int *arr, int size, t_que **a);
 int		assign_index(t_que **que_list, int *arr);
 
-
+//OP_UTILS
 void	ft_list_swap(t_que *arr_a);
 void	rotate(t_que *arr_a, int i);
 

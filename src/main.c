@@ -6,7 +6,7 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:42:40 by oishchen          #+#    #+#             */
-/*   Updated: 2025/05/19 12:40:52 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/19 14:31:20 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ t_que	*parse_input(int ac, char *av[])
 		input = no_space_str(av[i], input, &cur_pos);
 		if ((!input && av[i][cur_pos]) || (!input && ft_strlen(av[i]) == 0))
 			free_each_node_exit(&arr_a, 1);
-		else if (input)
-			atoi_to_que(input, &arr_a, 1);
+		else if (input && !atoi_to_que(input, &arr_a, 1))
+			return (free(input), free_each_node_exit(&arr_a, 1), NULL);
 		free(input);
 		if (!av[i][cur_pos])
 		{

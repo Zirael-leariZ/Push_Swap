@@ -6,7 +6,7 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 21:48:52 by oishchen          #+#    #+#             */
-/*   Updated: 2025/05/19 12:41:24 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/19 14:27:58 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 int	is_allowed_val(long long res)
 {
 	if (res <= -2147483648 || res > 2147483647)
-		return (write(2, "Error\n", 6), 0);
+		return (write(2, "PEERR\n", 6), 0);
 	return (1);
 }
 
@@ -43,7 +43,7 @@ int	is_in_que(t_que *arr, int cur_val)
 	return (0);
 }
 
-void	atoi_to_que(char *str, t_que **arr_a, int sign)
+int	atoi_to_que(char *str, t_que **arr_a, int sign)
 {
 	long long	res;
 
@@ -61,14 +61,13 @@ void	atoi_to_que(char *str, t_que **arr_a, int sign)
 			res = res * 10 + (*str - '0');
 			str++;
 		}
-		if (!is_in_que(*arr_a, res * sign) && is_allowed_val(res))
-		{
-			if (!append_value_bottom(arr_a, (res * sign)))
-				free_each_node_exit(arr_a, 1);
-		}
+		if (!is_in_que(*arr_a, res * sign) && is_allowed_val(res)
+			&& append_value_bottom(arr_a, (res * sign)))
+			return (1);
 		else
-			free_each_node_exit(arr_a, 1);
+			return (0);
 	}
+	return (0);
 }
 
 char	*no_space_str(char *src, char *dest, int *cur_pos)

@@ -6,7 +6,7 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:34:44 by oishchen          #+#    #+#             */
-/*   Updated: 2025/05/19 12:36:20 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/19 15:18:46 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,34 @@ int	is_such_command(char *str)
 			|| ft_strncmp("rr\n", str, len) == 0
 			|| ft_strncmp ("rrr\n", str, len)) == 0)
 		return (1);
-	return (1);
+	return (0);
+}
+
+t_que	*parse_input(int ac, char *av[])
+{
+	int		i;
+	t_que	*arr_a;
+	char	*input;
+	int		cur_pos;
+
+	cur_pos = 0;
+	i = 1;
+	arr_a = create_list();
+	if (!arr_a)
+		return (NULL);
+	while (av[i] && ac > 1)
+	{
+		input = no_space_str(av[i], input, &cur_pos);
+		if ((!input && av[i][cur_pos]) || (!input && ft_strlen(av[i]) == 0))
+			free_each_node_exit(&arr_a, 1);
+		else if (input && !atoi_to_que(input, &arr_a, 1))
+			return (free(input), free_each_node_exit(&arr_a, 1), NULL);
+		free(input);
+		if (!av[i][cur_pos])
+		{
+			i++;
+			cur_pos = 0;
+		}
+	}
+	return (arr_a);
 }

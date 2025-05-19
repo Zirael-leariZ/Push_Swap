@@ -6,7 +6,7 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 14:30:23 by oishchen          #+#    #+#             */
-/*   Updated: 2025/05/19 12:37:55 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/19 15:33:56 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,11 @@ t_ops	*rg_ops(t_que **a, t_que **b)
 {
 	char	*line;
 	t_ops	*my_ops;
+	int		*arr_int;
 
+	arr_int = NULL;
+	arr_int = ft_sort(a, arr_int);
+	free(arr_int);
 	my_ops = NULL;
 	line = get_next_line(0);
 	while (line != NULL)
@@ -94,7 +98,9 @@ int	check_list(t_que *a)
 	while (i < a->size - 1)
 	{
 		if (a->head->index > a->head->next->index)
+		{
 			return (0);
+		}
 		a->head = a->head->next;
 		i++;
 	}
@@ -111,7 +117,7 @@ int	main(int ac, char *av[])
 	{
 		a = parse_input(ac, av);
 		if (!a)
-			return (1);
+			return (write(1, "KO\n", 3), 1);
 		b = create_list();
 		if (!b)
 			free_each_node_exit(&a, 1);
