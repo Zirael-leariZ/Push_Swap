@@ -6,7 +6,7 @@
 /*   By: oishchen <oishchen@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:42:40 by oishchen          #+#    #+#             */
-/*   Updated: 2025/05/19 14:31:20 by oishchen         ###   ########.fr       */
+/*   Updated: 2025/05/19 16:05:18 by oishchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,5 @@ int	main(int ac, char *av[])
 		free_each_node(&a);
 		free_each_node_exit(&b, 0);
 	}
-	return (write(1, "\n", 1), 0);
+	return (0);
 }
